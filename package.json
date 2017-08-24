@@ -1,0 +1,40 @@
+{
+  "name": "modal-1k",
+  "version": "1.0.0",
+  "description": "Super tiny jquery plugin for modal windows. Less then 1k bytes.",
+  "main": "jquery.modal1k.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/levmorozov/modal-1k.git"
+  },
+  "keywords": [
+    "modal",
+    "popup",
+    "minimal",
+    "simple",
+    "slim",
+    "small",
+    "leanmodal",
+    "jquery",
+    "jquery-plugin",
+    "fast",
+    "lightweight"
+  ],
+  "author": "Lev Morozov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/levmorozov/modal-1k/issues"
+  },
+  "homepage": "https://github.com/levmorozov/modal-1k#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0"
+  }
+}
