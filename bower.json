@@ -1,7 +1,7 @@
 {
-  "name": "modal-1k",
+  "name": "jquery-m1k",
   "description": "Super tiny jquery plugin for modal windows. Less then 1k bytes.",
-  "main": "jquery.modal1k.js",
+  "main": "jquery.m1k.js",
   "authors": [
     "Lev Morozov"
   ],
@@ -19,7 +19,7 @@
     "fast",
     "lightweight"
   ],
-  "homepage": "https://github.com/levmorozov/modal-1k",
+  "homepage": "https://github.com/levmorozov/jquery-m1k",
   "ignore": [
     "**/.*",
     "node_modules",

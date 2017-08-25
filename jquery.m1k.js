@@ -1,13 +1,11 @@
-//https://github.com/kylefox/jquery-modal/blob/master/jquery.modal.js
-//https://github.com/vodkabears/Remodal/blob/master/src/remodal.js
-//    https://raw.githubusercontent.com/eustasy/jQuery.leanModal2/master/jQuery.leanModal2.js
-
-
+/*!
+    https://github.com/levmorozov/jquery-m1k
+*/
 (function($){
     "use strict";
 
-    var h = $(document.documentElement),
-        d = document,
+    var d = document,
+        h = $(d.documentElement),
         modals = [],
         root;
 
@@ -46,17 +44,16 @@
 
             t +=  '</div></div>';
 
+            that.box = $(t.replace(/%/g,that.id)).clone();
+
+            if (that.single)
+                while (getCurrent())
+                    getCurrent().close(); // Close any open modals.
+
             if(root === undefined) {
                 root = $('<div class="'+that.id+'-root"></div>');
                 $('body').append(root);
             }
-
-
-            that.box = $(t.replace(/%/g,that.id)).clone();
-
-            if (that.single)
-                while (getCurrent() !== null)
-                    getCurrent().close(); // Close any open modals.
 
             modals.push(that);
 
@@ -87,14 +84,14 @@
                 var $target = $(event.target);
                 if( (that.clickClose  && $target.is('.'+that.id))
                     || $target.closest(that.id + '-close').length ) {
-                    that._close(event);
+                    that._close();
                     event.preventDefault();
                 }
             });
 
-            that.box.find('.'+that.id+'-close').click(function() {
-                getCurrent()._close();return false;
-            });
+            //that.box.find('.'+that.id+'-close').click(function() {
+//                that._close();return false;
+  //          });
 
             $(d).off('keydown.'+that.id).on('keydown.'+that.id, function(event) {
                 var current = getCurrent();
@@ -116,7 +113,7 @@
             // Restore focus
             that._pa.focus();
             // Restore scroll
-            if(getCurrent() === null) {
+            if(!getCurrent()) {
                 h.removeClass('with-' + that.id);
             }
             that.el.trigger(that.id + ':after-close', that);
@@ -129,13 +126,12 @@
      * Public static functions
      */
 
-    $.m1k.close =  function(event) {
+    $.m1k.close =  function() {
         var current = getCurrent();
-        if (current === null) return;
+        if (current)
+            current._close();
 
-        if (event) event.preventDefault();
-        current._close();
-        return current.el;
+        return false;
     }
 
 
