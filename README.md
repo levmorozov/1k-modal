@@ -1,7 +1,7 @@
 modal-1k
 ============
 
-Super tiny jquery plugin for modal windows. JS size 1.4k minified, 757 bytes gziped.
+Super tiny jquery plugin for modal windows. JS size 1163 bytes minified, 643 bytes gziped.
 
 
 Main Ideas
@@ -73,12 +73,12 @@ Options
 --------
 
 List of options with default values:
-```javascript
+```
 {
     id : 'm1k',       // It's a namespace. Append to every css class name
-    single: true,     // Close other modal windows
-    escClose: true,   // Close window on esc
-    clickClose: true, // Close window on click
+    single: false,    // Close other modal windows when open new window
+    esc: true,        // Close window on esc
+    click: true,      // Close window on click in back
     close: 'x'        // Close button contents. Can be null|undefined
 }
 ```
@@ -87,7 +87,7 @@ List of options with default values:
 There 3 ways to pass options: 
 - defaults: ```$.m1k.default```
 - direct: ```m1k({options})```
-- data attributes: ```<div class='popup' data-esc-close='false'>```
+- data attributes: ```<div class='popup' data-esc='false'>```
 
 API
 ----------

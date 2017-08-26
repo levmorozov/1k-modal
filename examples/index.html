@@ -114,7 +114,7 @@
 </div>
 <h1>Modal 1k (m1k)</h1>
 <p>
-    Super tiny jquery plugin for modal windows. JS size 1.4k minified, 764 bytes gziped.
+    Super tiny jquery plugin for modal windows. JS size 1.2k minified, 647 bytes gziped.
 </p>
 <p>
     (Yeah, I know it's 2017, mkay?)
@@ -146,7 +146,7 @@
 </div>
 
 
-<div class="modal" id="ex2" style="display:none;">
+<div class="modal" id="ex2" style="display:none;" data-esc="false">
     <h3>Oh, it's me, your first modal window!</h3>
     <p>Demo: <a href="#" id="test-modal-link3" >Open Modal</a></p>
 </div>
@@ -190,9 +190,7 @@
     $(function() {
 
         $('#test-modal-link1').click(function() {
-            $('#ex1').m1k({
-                clickClose : false
-            });
+            $('#ex1').m1k();
         });
 
 
@@ -202,9 +200,7 @@
 
 
         $('#test-modal-link3').click(function() {
-            $('#ex3').m1k({
-                'single' : false
-            });
+            $('#ex3').m1k();
         });
 
         $('#test-modal-link4').click(function() {

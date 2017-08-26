@@ -1,8 +1,4 @@
-/*!
-    https://github.com/levmorozov/jquery-m1k
-*/
 (function($){
-    "use strict";
 
     var d = document,
         h = $(d.documentElement),
@@ -13,121 +9,103 @@
         return modals.length ? modals[modals.length - 1] : null;
     }
 
-    $.m1k = function(element, config) {
-
-        var e = $(element);
-        $.extend(this,
+    $.m1k = function(obj, config) {
+        var that = $.extend(this,
+            {
+                id :'m1k',
+                single: false,
+                esc: true,
+                click: true,
+                close: '×',
+            },
             $.fn.m1k.defaults,
             config,
-            e.data(), {
-                el: e
-            }
-        );
+            obj.data()
+        ),
+            id = that.id,
+            oldFocus,
+            box,
+            element = obj;
 
-        var that = this;
-
-        var t = '<div class=": :-hide"><div class=":-content">';
-
-        if(that.close) {
-            t += '<div class=":-close" aria-label="Close">' + that.close + '</div>'
-        }
-
-        t +=  '</div></div>';
-
-        that.b = $(t.replace(/:/g,that.id)).clone();
+        box = $(
+            '<div class="'+id+' '+id+'-hide"><div class="'+id+'-content">' +
+            (that.close ? '<div class="'+id+'-close" aria-label="Close">' + that.close + '</div>' : '') +
+            '</div></div>'
+        ).clone();
 
         if (that.single)
             while (getCurrent())
-                getCurrent()._c(); // Close any open modals.
+                getCurrent().c(); // Close any open modals.
 
         if(root === undefined) { // Add root element to page only once
-            root = $('<div class="'+that.id+'-root"></div>');
+            root = $('<div class="'+id+'-root"></div>');
             $('body').append(root);
         }
 
         modals.push(that);
 
-        h.addClass('with-' + that.id); // add class to html to disable scrollbars
+        h.addClass('w-' + id); // add class to html to disable scrollbars
 
         // Remember focus:
-        that._pa = d.activeElement;
+        oldFocus = d.activeElement;
 
-        if (that._pa.blur) {
-            that._pa.blur();
+        if (oldFocus.blur) {
+            oldFocus.blur();
         }
 
-        that.el.show();
+        element.show();
 
-        that.b
-            .find('.'+that.id+'-content')
-            .append(that.el);
-        that.b
-            .removeClass(that.id+'-hide')
-            .on('click.'+that.id, function(event) {
+        box
+            .find('.'+id+'-content')
+            .append(element);
+        box
+            .removeClass(id+'-hide')
+            .on('click.'+id, function(event) {
                 var $target = $(event.target);
-                if(that.clickClose  && $target.is('.'+that.id)) {
-                    that._c();
+                if(that.click  && $target.is('.'+id)) {
+                    that.c();
                     //  event.preventDefault();
                 }
             })
-            .find('.'+that.id+'-close').click(function() {
-            that._c();return false;
+            .find('.'+id+'-close').click(function() {
+                that.c();return false;
+            });
+        root.append(box);
+
+        $(d).off('keydown.'+id).on('keydown.'+id, function(event) {
+            if (event.which === 27 && getCurrent().esc) getCurrent().c();
         });
-        root.append(that.b);
 
-        $(d).off('keydown.'+that.id).on('keydown.'+that.id, function(event) {
-            var current = getCurrent();
-            if (event.which === 27 && current.escClose) current._c();
-        });
+        element.trigger(id + ':open');
 
-        that.el.trigger(that.id + ':open');
-    };
-
-    $.m1k.prototype = {
-        constructor: $.m1k,
-        id : 'm1k',
-        single: true,
-        escClose: true, // Close on esc
-        clickClose: true, // Close on click
-        close: 'x', // Close button added to popup if only «close» is not null
-
-        _c: function() { // Close popup
+        that.c = function() {
             modals.pop();
 
-            var that = this;
-
-            that.el.hide().appendTo($('body'));
-            that.b.remove();
-            that.b = null;
+            element.hide().appendTo($('body'));
+            box.remove();
+            box = null;
 
             // Restore focus
-            that._pa.focus();
+            if(oldFocus) oldFocus.focus();
             // Restore scroll
             if(!getCurrent()) {
-                h.removeClass('with-' + that.id);
-                $(d).off('keydown.'+that.id)
+                h.removeClass('w-' + id);
+                $(d).off('keydown.'+id)
             }
-            that.el.trigger(that.id + ':close');
+            element.trigger(id + ':close');
         }
-
     };
 
-
-    /**
-     * Public static functions
-     */
-
-    $.m1k.close =  function() {
-        var current = getCurrent();
-        if (current)
-            current._c();
+    $.m1k.close = function() {
+        if (getCurrent())
+            getCurrent().c();
     }
 
 
     $.fn.m1k = function(options){
 
         if (this.length === 1) {
-            new $.m1k(this, options);
+            new $.m1k($(this), options);
         }
 
         return this;
