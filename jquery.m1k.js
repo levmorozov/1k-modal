@@ -14,6 +14,7 @@
             {
                 id :'m1k',
                 single: false,
+                class: 'm1k-pop',
                 esc: true,
                 click: true,
                 close: '×',
@@ -28,7 +29,7 @@
             element = obj;
 
         box = $(
-            '<div class="'+id+' '+id+'-hide"><div class="'+id+'-content">' +
+            '<div class="'+id+' '+id+'-hide"><div class="'+id+'-content '+that.class+'">' +
             (that.close ? '<div class="'+id+'-close" aria-label="Close">' + that.close + '</div>' : '') +
             '</div></div>'
         ).clone();

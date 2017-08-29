@@ -65,6 +65,10 @@ html.w-m1k {
     white-space: normal;
 }
 
+.m1k-pop {
+    padding: 20px;
+}
+
 .m1k .m1k-close {
     /* position: centering vertical and horizontal */
     position: absolute;
